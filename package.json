@@ -20,6 +20,7 @@
     "aws-kcl": "^0.7.0",
     "aws-sdk": "^2.219.1",
     "dotenv-safe": "^5.0.1",
+    "simple-node-logger": "^0.93.37",
     "util": "^0.10.3"
   }
 }

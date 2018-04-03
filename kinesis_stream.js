@@ -1,5 +1,6 @@
 var kcl = require('aws-kcl');
 var util = require('util');
+const log = require('simple-node-logger').createFileLogger('streaming.log');
 
 /**
  * The record processor must provide three functions:
@@ -75,7 +76,7 @@ var recordProcessor = {
       // Note that "data" is a base64-encoded string. Buffer can be used to
       // decode the data into a string.
       data = new Buffer(record.data, 'base64').toString();
-
+      log.info("Got data" + data);
       // Custom record processing logic ...
     }
     if (!sequenceNumber) {
