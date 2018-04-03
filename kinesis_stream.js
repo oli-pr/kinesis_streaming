@@ -2,7 +2,7 @@ require('dotenv-safe').config();
 var imageBucket = process.env.S3_IMAGE_BUCKET;
 var kcl = require('aws-kcl');
 var util = require('util');
-var AWS = require('AWS-sdk');
+var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 const log = require('simple-node-logger').createSimpleFileLogger('streaming.log');
 
@@ -91,7 +91,7 @@ var recordProcessor = {
           for(index = 0; index < media.length; ++index) {
             var imageKey = media[index].media_url;
             log.info(imageKey);
-            var params = {Bucket: imageBucket, Key: imageKey, Body 'ABC'};
+            var params = {Bucket: imageBucket, Key: imageKey, Body: 'ABC'};
             s3.putObject(params, function(err, data) {
               if(err) {
                 log.info("Image upload failed");
