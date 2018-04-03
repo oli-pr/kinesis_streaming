@@ -77,6 +77,18 @@ var recordProcessor = {
       // decode the data into a string.
       data = new Buffer(record.data, 'base64').toString();
       log.info("Got data" + data);
+      var tweet = JSON.parse(data);
+      
+      if(tweet.hasOwnProperty('extended_entities')) {
+        if(message.extended_entities.hasOwnProperty('media')) {
+          var media = message.extended_entities.media;
+          for(index = 0; index < media.length; ++index) {
+           log.info(media[index].media_url);
+          }
+        }
+      } 
+    }
+
       // Custom record processing logic ...
     }
     if (!sequenceNumber) {
