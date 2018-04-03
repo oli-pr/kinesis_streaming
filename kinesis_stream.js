@@ -4,6 +4,7 @@ var kcl = require('aws-kcl');
 var util = require('util');
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
+var request = require('request');
 const log = require('simple-node-logger').createSimpleFileLogger('streaming.log');
 
 /**
@@ -82,21 +83,49 @@ var recordProcessor = {
       data = new Buffer(record.data, 'base64').toString();
       
       // Custom record processing logic ...
-      log.info("Got data" + data);
+ //     log.info("Got data" + data);
       var tweet = JSON.parse(data);
       
       if(tweet.hasOwnProperty('extended_entities')) {
         if(tweet.extended_entities.hasOwnProperty('media')) {
           var media = tweet.extended_entities.media;
+          log.info("Got media" + media);
           for(index = 0; index < media.length; ++index) {
-            var imageKey = media[index].media_url;
-            log.info(imageKey);
-            var params = {Bucket: imageBucket, Key: imageKey, Body: 'ABC'};
-            s3.putObject(params, function(err, data) {
-              if(err) {
-                log.info("Image upload failed");
+            var imageUrl = media[index].media_url;
+            log.info(imageUrl);
+            var filename = imageUrl.split('/').pop();
+//            var params = {Bucket: imageBucket, Key: filename, Body: 'ABC'};
+
+            var options = {
+	      uri: imageUrl,
+              encoding: null
+            };
+            
+            request(options,
+              function(err, response, body) {
+                if(err || response.statusCode != 200) {
+		  log.error("failed to load image");
+                  log.error(error);
+	        } else {
+                  var params = {Bucket: imageBucket, Key: filename, Body: body };
+                  s3.putObject(params,
+                    function(error, data) {
+                      if(error) {
+                        log.error("Failed to upload to S3");
+                        log.error(error);
+                      } else {
+                        log.info("Uploaded to S3");
+		      }
+                    }
+                  );
+                }
               }
-            }); 
+            );
+//            s3.putObject(params, function(err, data) {
+//              if(err) {
+//                log.info("Image upload failed");
+//             }
+//            }); 
           }
         }
       } 
