@@ -1,0 +1,25 @@
+{
+  "name": "kinesis_streaming",
+  "version": "0.0.0",
+  "description": "kinesis streaming",
+  "main": "kinesis_stream.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oli-pr/kinesis_streaming.git"
+  },
+  "author": "arch sol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oli-pr/kinesis_streaming/issues"
+  },
+  "homepage": "https://github.com/oli-pr/kinesis_streaming#readme",
+  "dependencies": {
+    "aws-kcl": "^0.7.0",
+    "aws-sdk": "^2.219.1",
+    "dotenv-safe": "^5.0.1",
+    "util": "^0.10.3"
+  }
+}
