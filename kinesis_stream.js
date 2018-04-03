@@ -83,9 +83,9 @@ var recordProcessor = {
       
       if(tweet.hasOwnProperty('extended_entities')) {
         if(tweet.extended_entities.hasOwnProperty('media')) {
-          var media = message.extended_entities.media;
+          var media = tweet.extended_entities.media;
           for(index = 0; index < media.length; ++index) {
-           console.log(media[index].media_url);
+            log.info(media[index].media_url);
           }
         }
       } 
