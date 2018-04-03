@@ -76,6 +76,8 @@ var recordProcessor = {
       // Note that "data" is a base64-encoded string. Buffer can be used to
       // decode the data into a string.
       data = new Buffer(record.data, 'base64').toString();
+      
+      // Custom record processing logic ...
       log.info("Got data" + data);
       var tweet = JSON.parse(data);
       
@@ -83,13 +85,10 @@ var recordProcessor = {
         if(message.extended_entities.hasOwnProperty('media')) {
           var media = message.extended_entities.media;
           for(index = 0; index < media.length; ++index) {
-           log.info(media[index].media_url);
+           console.log(media[index].media_url);
           }
         }
       } 
-    }
-
-      // Custom record processing logic ...
     }
     if (!sequenceNumber) {
       // Must call completeCallback to proceed further.
