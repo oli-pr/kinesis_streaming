@@ -1,6 +1,6 @@
 {
   "name": "kinesis_streaming",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "kinesis streaming",
   "main": "kinesis_stream.js",
   "scripts": {
