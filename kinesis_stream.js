@@ -82,7 +82,7 @@ var recordProcessor = {
       var tweet = JSON.parse(data);
       
       if(tweet.hasOwnProperty('extended_entities')) {
-        if(message.extended_entities.hasOwnProperty('media')) {
+        if(tweet.extended_entities.hasOwnProperty('media')) {
           var media = message.extended_entities.media;
           for(index = 0; index < media.length; ++index) {
            console.log(media[index].media_url);
