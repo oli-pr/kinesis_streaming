@@ -1,6 +1,6 @@
 var kcl = require('aws-kcl');
 var util = require('util');
-const log = require('simple-node-logger').createFileLogger('streaming.log');
+const log = require('simple-node-logger').createSimpleFileLogger('streaming.log');
 
 /**
  * The record processor must provide three functions:
