@@ -105,7 +105,7 @@ var recordProcessor = {
               function(err, response, body) {
                 if(err || response.statusCode != 200) {
 		  log.error("failed to load image");
-                  log.error(error);
+                  log.error(err);
 	        } else {
                   var params = {Bucket: imageBucket, Key: filename, Body: body };
                   s3.putObject(params,
