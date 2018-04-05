@@ -83,18 +83,16 @@ var recordProcessor = {
       data = new Buffer(record.data, 'base64').toString();
       
       // Custom record processing logic ...
- //     log.info("Got data" + data);
       var tweet = JSON.parse(data);
       
-      if(tweet.hasOwnProperty('extended_entities')) {
-        if(tweet.extended_entities.hasOwnProperty('media')) {
+      if(tweet.hasOwnProperty('entities')) {
+        if(tweet.entities.hasOwnProperty('media')) {
           var media = tweet.extended_entities.media;
           log.info("Got media" + media);
           for(index = 0; index < media.length; ++index) {
             var imageUrl = media[index].media_url;
             log.info(imageUrl);
             var filename = imageUrl.split('/').pop();
-//            var params = {Bucket: imageBucket, Key: filename, Body: 'ABC'};
 
             var options = {
 	      uri: imageUrl,
@@ -121,11 +119,44 @@ var recordProcessor = {
                 }
               }
             );
-//            s3.putObject(params, function(err, data) {
-//              if(err) {
-//                log.info("Image upload failed");
-//             }
-//            }); 
+          }
+        }
+      }
+
+      if(tweet.hasOwnProperty('extended_entities')) {
+        if(tweet.extended_entities.hasOwnProperty('media')) {
+          var media = tweet.extended_entities.media;
+          log.info("Got media" + media);
+          for(index = 0; index < media.length; ++index) {
+            var imageUrl = media[index].media_url;
+            log.info(imageUrl);
+            var filename = imageUrl.split('/').pop();
+
+            var options = {
+	      uri: imageUrl,
+              encoding: null
+            };
+            
+            request(options,
+              function(err, response, body) {
+                if(err || response.statusCode != 200) {
+		  log.error("failed to load image");
+                  log.error(err);
+	        } else {
+                  var params = {Bucket: imageBucket, Key: filename, Body: body };
+                  s3.putObject(params,
+                    function(error, data) {
+                      if(error) {
+                        log.error("Failed to upload to S3");
+                        log.error(error);
+                      } else {
+                        log.info("Uploaded to S3");
+		      }
+                    }
+                  );
+                }
+              }
+            );
           }
         }
       } 
