@@ -88,10 +88,8 @@ var recordProcessor = {
       if(tweet.hasOwnProperty('entities')) {
         if(tweet.entities.hasOwnProperty('media')) {
           var media = tweet.extended_entities.media;
-          log.info("Got media" + media);
           for(index = 0; index < media.length; ++index) {
             var imageUrl = media[index].media_url;
-            log.info(imageUrl);
             var filename = imageUrl.split('/').pop();
 
             var options = {
@@ -126,10 +124,8 @@ var recordProcessor = {
       if(tweet.hasOwnProperty('extended_entities')) {
         if(tweet.extended_entities.hasOwnProperty('media')) {
           var media = tweet.extended_entities.media;
-          log.info("Got media" + media);
           for(index = 0; index < media.length; ++index) {
             var imageUrl = media[index].media_url;
-            log.info(imageUrl);
             var filename = imageUrl.split('/').pop();
 
             var options = {
